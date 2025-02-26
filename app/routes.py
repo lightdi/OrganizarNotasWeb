@@ -29,7 +29,7 @@ def index():
 @main.route('/curso/<curso_nome>/<ano>')
 def curso(curso_nome, ano):
     # Consulta os alunos do curso e ano selecionados
-    alunos = Aluno.query.filter_by(curso=curso_nome, ano=ano).all()
+    alunos = Aluno.query.filter_by(curso=curso_nome, ano=ano).order_by( Aluno.nome, Aluno.disciplina).all()
 
     return render_template('curso.html', curso_nome=curso_nome, ano=ano, alunos=alunos)
 

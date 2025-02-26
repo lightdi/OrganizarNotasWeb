@@ -26,6 +26,13 @@
         .red-bg {
             background-color: #f8d7da;
         }
+        .table-bordered th, .table-bordered td {
+            border: 1px solid #dee2e6;
+        }
+        .student-info {
+            background-color: #e9ecef;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -43,54 +50,85 @@
             </div>
         </div>
 
-  
-           
         <div class="table-container">
             <!-- Tabela com os alunos -->
             <table class="table table-striped table-bordered">
                 <thead class="thead-dark">
                     <tr>
-                        <th>Matricula</th>
+                        <th style="width: 150px;">Matrícula</th>
                         <th>Nome</th>
-                        <th>Disciplina</th>
-                        <th>Média 1</th>
-                        <th>Frequência 1</th>
-                        <th>Média 2</th>
-                        <th>Frequência 2</th>
-                        <th>Média 3</th>
-                        <th>Frequência 3</th>
-                        <th>Média 4</th>
-                        <th>Frequência 4</th>
-                        <th>Final</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {% set last_matricula = namespace(value="") %}
                     {% for aluno in alunos %}
-                        <tr>
-                            <td>{{ aluno.matricula }}</td>
-                            <td>{{ aluno.nome }}</td>
-                            <td>{{ aluno.disciplina }}</td>
-                            
-                            <!-- Condições para a média -->
-                            <td class="{% if aluno.media1 < 70 %}red-bg{% endif %}">{{ aluno.media1 }}</td>
-                            <td class="{% if aluno.frequencia1 < 75 %}red-bg{% endif %}">{{ aluno.frequencia1 }}</td>
+                        {% if aluno.matricula != last_matricula.value %}
 
-                            <td class="{% if aluno.media2 < 70 %}red-bg{% endif %}">{{ aluno.media2 }}</td>
-                            <td class="{% if aluno.frequencia2 < 75 %}red-bg{% endif %}">{{ aluno.frequencia2 }}</td>
-
-                            <td class="{% if aluno.media3 < 70 %}red-bg{% endif %}">{{ aluno.media3 }}</td>
-                            <td class="{% if aluno.frequencia3 < 75 %}red-bg{% endif %}">{{ aluno.frequencia3 }}</td>
-
-                            <td class="{% if aluno.media4 < 70 %}red-bg{% endif %}">{{ aluno.media4 }}</td>
-                            <td class="{% if aluno.frequencia4 < 75 %}red-bg{% endif %}">{{ aluno.frequencia4 }}</td>
-
-                            <td>{{ aluno.final }}</td>
-                        </tr>
+                            {%if last_matricula.value != "" %}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% set last_matricula.value = aluno.matricula %}
+                            <tr>
+                                <td class="student-info">{{ aluno.matricula }} </td>
+                                <td class="student-info">{{ aluno.nome }} </td>
+                            </tr>
+                            <!-- Subtabela para as disciplinas do aluno -->
+                           
+                             <!-- Caso a matrícula seja a mesma, apenas mostra a disciplina -->
+                            <tr>
+                                <td colspan="2">
+                                    <table class="table table-sm table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Disciplina</th>
+                                                <th>Média 1</th>
+                                                <th>Frequência 1</th>
+                                                <th>Média 2</th>
+                                                <th>Frequência 2</th>
+                                                <th>Média 3</th>
+                                                <th>Frequência 3</th>
+                                                <th>Média 4</th>
+                                                <th>Frequência 4</th>
+                                                <th>Final</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{ aluno.disciplina }}</td>
+                                                <td class="{% if aluno.media1 < 70 %}red-bg{% endif %}">{{ aluno.media1 }}</td>
+                                                <td class="{% if aluno.frequencia1 < 75 %}red-bg{% endif %}">{{ aluno.frequencia1 }}</td>
+                                                <td class="{% if aluno.media2 < 70 %}red-bg{% endif %}">{{ aluno.media2 }}</td>
+                                                <td class="{% if aluno.frequencia2 < 75 %}red-bg{% endif %}">{{ aluno.frequencia2 }}</td>
+                                                <td class="{% if aluno.media3 < 70 %}red-bg{% endif %}">{{ aluno.media3 }}</td>
+                                                <td class="{% if aluno.frequencia3 < 75 %}red-bg{% endif %}">{{ aluno.frequencia3 }}</td>
+                                                <td class="{% if aluno.media4 < 70 %}red-bg{% endif %}">{{ aluno.media4 }}</td>
+                                                <td class="{% if aluno.frequencia4 < 75 %}red-bg{% endif %}">{{ aluno.frequencia4 }}</td>
+                                                <td>{{ aluno.final }}</td>
+                                            </tr>
+                        
+                        {% else %}
+                            <!-- Caso a matrícula seja a mesma, apenas mostra a disciplina -->
+                            <tr>
+                                <td>{{ aluno.disciplina }}</td>
+                                <td class="{% if aluno.media1 < 70 %}red-bg{% endif %}">{{ aluno.media1 }}</td>
+                                <td class="{% if aluno.frequencia1 < 75 %}red-bg{% endif %}">{{ aluno.frequencia1 }}</td>
+                                <td class="{% if aluno.media2 < 70 %}red-bg{% endif %}">{{ aluno.media2 }}</td>
+                                <td class="{% if aluno.frequencia2 < 75 %}red-bg{% endif %}">{{ aluno.frequencia2 }}</td>
+                                <td class="{% if aluno.media3 < 70 %}red-bg{% endif %}">{{ aluno.media3 }}</td>
+                                <td class="{% if aluno.frequencia3 < 75 %}red-bg{% endif %}">{{ aluno.frequencia3 }}</td>
+                                <td class="{% if aluno.media4 < 70 %}red-bg{% endif %}">{{ aluno.media4 }}</td>
+                                <td class="{% if aluno.frequencia4 < 75 %}red-bg{% endif %}">{{ aluno.frequencia4 }}</td>
+                                <td>{{ aluno.final }}</td>
+                            </tr>
+                        {% endif %}  
+                                        
                     {% endfor %}
                 </tbody>
             </table>
         </div>
-        
     </div>
 
     <!-- Bootstrap JS -->
