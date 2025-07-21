@@ -90,7 +90,6 @@ def upload_file():
 
                     aluno = Aluno.query.filter_by(matricula=matricula, disciplina=disciplina).first()
 
-
                     if aluno:
                         # Atualiza os dados do bimestre correto
                         if bimestre == "1":
@@ -113,6 +112,7 @@ def upload_file():
                             nome=nome,
                             curso=curso,
                             ano = ano,
+                            serie = int(ano),
                             disciplina=disciplina,
                         )
                         if bimestre == "1":

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursos - {{ curso_nome }}</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+        }
+        .table-container {
+            margin-top: 30px;
+        }
+        .card-header {
+            background-color: #343a40;
+            color: white;
+        }
+        .card-body {
+            background-color: #ffffff;
+        }
+        .red-bg {
+            background-color: #f8d7da;
+        }
+        .table-bordered th, .table-bordered td {
+            border: 1px solid #dee2e6;
+        }
+        .student-info {
+            background-color: #e9ecef;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- Link para voltar ao index -->
+        <div class="row">
+            <div class="col">
+                <a href="/" class="btn btn-primary mb-4">Voltar para o Início</a>
+            </div>
+        </div>
+        <!-- Título da página -->
+        <div class="row">
+            <div class="col">
+                <h2 class="text-center text-primary">Cursos - {{ curso_nome }} - Ano {{ ano }}</h2>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <!-- Tabela com os alunos -->
+            <table class="table table-striped table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="width: 150px;">Matrícula</th>
+                        <th>Nome</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set last_matricula = namespace(value="") %}
+                    {% for aluno in alunos %}
+                        {% if aluno.matricula != last_matricula.value %}
+
+                            {%if last_matricula.value != "" %}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% set last_matricula.value = aluno.matricula %}
+                            <tr>
+                                <td class="student-info">{{ aluno.matricula }} </td>
+                                <td class="student-info">{{ aluno.nome }} </td>
+                            </tr>
+                            <!-- Subtabela para as disciplinas do aluno -->
+                           
+                             <!-- Caso a matrícula seja a mesma, apenas mostra a disciplina -->
+                            <tr>
+                                <td colspan="2">
+                                    <table class="table table-sm table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Disciplina</th>
+                                                <th>Média 1</th>
+                                                <th>Frequência 1</th>
+                                                <th>Média 2</th>
+                                                <th>Frequência 2</th>
+                                                <th>Média 3</th>
+                                                <th>Frequência 3</th>
+                                                <th>Média 4</th>
+                                                <th>Frequência 4</th>
+                                                <th>Final</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>{{ aluno.disciplina }}</td>
+                                                <td class="{% if aluno.media1 < 70 %}red-bg{% endif %}">{{ aluno.media1 }}</td>
+                                                <td class="{% if aluno.frequencia1 < 75 %}red-bg{% endif %}">{{ aluno.frequencia1 }}</td>
+                                                <td class="{% if aluno.media2 < 70 %}red-bg{% endif %}">{{ aluno.media2 }}</td>
+                                                <td class="{% if aluno.frequencia2 < 75 %}red-bg{% endif %}">{{ aluno.frequencia2 }}</td>
+                                                <td class="{% if aluno.media3 < 70 %}red-bg{% endif %}">{{ aluno.media3 }}</td>
+                                                <td class="{% if aluno.frequencia3 < 75 %}red-bg{% endif %}">{{ aluno.frequencia3 }}</td>
+                                                <td class="{% if aluno.media4 < 70 %}red-bg{% endif %}">{{ aluno.media4 }}</td>
+                                                <td class="{% if aluno.frequencia4 < 75 %}red-bg{% endif %}">{{ aluno.frequencia4 }}</td>
+                                                <td>{{ aluno.final }}</td>
+                                            </tr>
+                        
+                        {% else %}
+                            <!-- Caso a matrícula seja a mesma, apenas mostra a disciplina -->
+                            <tr>
+                                <td>{{ aluno.disciplina }}</td>
+                                <td class="{% if aluno.media1 < 70 %}red-bg{% endif %}">{{ aluno.media1 }}</td>
+                                <td class="{% if aluno.frequencia1 < 75 %}red-bg{% endif %}">{{ aluno.frequencia1 }}</td>
+                                <td class="{% if aluno.media2 < 70 %}red-bg{% endif %}">{{ aluno.media2 }}</td>
+                                <td class="{% if aluno.frequencia2 < 75 %}red-bg{% endif %}">{{ aluno.frequencia2 }}</td>
+                                <td class="{% if aluno.media3 < 70 %}red-bg{% endif %}">{{ aluno.media3 }}</td>
+                                <td class="{% if aluno.frequencia3 < 75 %}red-bg{% endif %}">{{ aluno.frequencia3 }}</td>
+                                <td class="{% if aluno.media4 < 70 %}red-bg{% endif %}">{{ aluno.media4 }}</td>
+                                <td class="{% if aluno.frequencia4 < 75 %}red-bg{% endif %}">{{ aluno.frequencia4 }}</td>
+                                <td>{{ aluno.final }}</td>
+                            </tr>
+                        {% endif %}  
+                                        
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
